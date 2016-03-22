@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hashozaur::CamelKeysHash do
+describe Hashozaur::CamelBackKeysHash do
   describe 'with snake keys' do
     describe 'which are JSON-style strings' do
       describe 'in the simplest case' do
@@ -8,7 +8,7 @@ describe Hashozaur::CamelKeysHash do
           { 'first_key' => 'fooBar' }
         end
 
-        describe 'non-destructive conversion to CamelCase' do
+        describe 'non-destructive conversion to camelBack' do
           let(:camelized) { described_class.convert(hash) }
           let(:key) { camelized.keys.first }
           let(:value) { camelized.values.first }
@@ -18,7 +18,7 @@ describe Hashozaur::CamelKeysHash do
           end
 
           it 'camelizes the key' do
-            expect(key).to eq('FirstKey')
+            expect(key).to eq('firstKey')
           end
 
           it 'leaves the value untouched' do
@@ -45,33 +45,33 @@ describe Hashozaur::CamelKeysHash do
             ] }
         end
 
-        describe 'non-destructive conversion to CamelCase' do
+        describe 'non-destructive conversion to camelBack' do
           let(:camelized) { described_class.convert(hash) }
 
           it 'recursively camelizes the keys on the top level of the hash' do
-            expect(camelized.keys).to eq(%w(AppleType VegetableTypes))
+            expect(camelized.keys).to eq(%w(appleType vegetableTypes))
           end
 
           it 'leaves the values on the top level alone' do
-            expect(camelized['AppleType']).to eq('Granny Smith')
+            expect(camelized['appleType']).to eq('Granny Smith')
           end
 
           it 'converts second-level keys' do
-            expect(camelized['VegetableTypes'].first).to have_key('PotatoType')
+            expect(camelized['vegetableTypes'].first).to have_key('potatoType')
           end
 
           it 'leaves second-level values alone' do
-            expect(camelized['VegetableTypes'].first).to have_value('Golden delicious')
+            expect(camelized['vegetableTypes'].first).to have_value('Golden delicious')
           end
 
           it 'converts third-level keys' do
-            expect(camelized['VegetableTypes'].last['PeanutNamesAndSpouses'].first).to have_key('BillThePeanut')
-            expect(camelized['VegetableTypes'].last['PeanutNamesAndSpouses'].last).to have_key('SammyThePeanut')
+            expect(camelized['vegetableTypes'].last['peanutNamesAndSpouses'].first).to have_key('billThePeanut')
+            expect(camelized['vegetableTypes'].last['peanutNamesAndSpouses'].last).to have_key('sammyThePeanut')
           end
 
           it 'leaves third-level values alone' do
-            expect(camelized['VegetableTypes'].last['PeanutNamesAndSpouses'].first['BillThePeanut']).to eq('sally_peanut')
-            expect(camelized['VegetableTypes'].last['PeanutNamesAndSpouses'].last['SammyThePeanut']).to eq('jill_peanut')
+            expect(camelized['vegetableTypes'].last['peanutNamesAndSpouses'].first['billThePeanut']).to eq('sally_peanut')
+            expect(camelized['vegetableTypes'].last['peanutNamesAndSpouses'].last['sammyThePeanut']).to eq('jill_peanut')
           end
         end
       end
@@ -83,7 +83,7 @@ describe Hashozaur::CamelKeysHash do
       { 'With Spaces' => 'FooBar' }
     end
 
-    describe 'to_camel_keys' do
+    describe 'to_camelback_keys' do
       it "doesn't get camelized" do
         expect(
           described_class.convert(hash)

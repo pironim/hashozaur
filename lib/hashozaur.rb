@@ -1,6 +1,7 @@
 require "hashozaur/version"
 
 require "hashozaur/camel_keys_hash"
+require "hashozaur/camel_back_keys_hash"
 require "hashozaur/snake_keys_hash"
 
 module Hashozaur
@@ -10,11 +11,11 @@ module Hashozaur
   end
 
   def self.to_camel_case(object)
-    CamelKeysHash.to_camel_keys(object)
+    CamelKeysHash.convert(object)
   end
 
   def self.to_camel_back_case(object)
-    CamelKeysHash.to_camelback_keys(object)
+    CamelBackKeysHash.convert(object)
   end
 
 end
